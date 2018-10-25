@@ -1,0 +1,287 @@
+/* 
+    DOG BG SCROLL ANIM
+*/
+@keyframes doggo-scroll
+{
+    0% {background-position: 0 0;}
+    100% {background-position: 50vw 0;}
+}
+
+@keyframes doggo-swooce-appear
+{
+    0% {transform: translate(100vw, -10vh)}
+    100% {transform: translate(0, 0)}
+}
+
+@keyframes title-wiggle
+{
+    0% { transform: translate(-50%, -50%) rotateZ(-12deg); }
+    50% { transform: translate(-50%, -50%) rotateZ(12deg); }
+    100% { transform: translate(-50%, -50%) rotateZ(-12deg); }
+}
+
+@keyframes dog-spin
+{
+    0% {transform: rotateZ(0deg); background-color: hsl(0deg, 100%, 50%);}
+    50% {transform: rotateZ(180deg); background-color: hsl(100deg, 100%, 50%);}
+    100% {transform: rotateZ(360deg); background-color: hsl(359deg, 100%, 50%);}
+}
+
+@font-face
+{
+    font-family: bm_font;
+    src: url("BMDOHYEON_ttf.ttf");
+}
+
+*
+{
+    color: blanchedalmond;
+
+    margin: 0;
+    padding: 0;
+}
+
+body
+{
+    background-color: rgb(32, 33, 34);
+}
+
+button
+{
+    padding: 1em;
+    background-color: #FFDD00;
+    color: rgb(19, 18, 18);
+
+    border: none;
+}
+
+/*
+    HEADER - COMMON
+    ================
+*/
+#header
+{
+    position: relative;
+    display: block;
+    content: "";
+    width: 100%;
+
+    /* Align center */
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+/*
+    HEADER - TOP PART (IMAGAE, LOGO AND STUFF)
+    ================
+*/
+#header > #header-top
+{
+    display: block;
+    content: "";
+    height: 30vh;
+
+    /* background-color: brown; */
+    background: #443229; /* Old browsers */
+    background: -moz-linear-gradient(left, #443229 25%, #a52a2a 25%, #a52a2a 50%, #443229 50%, #443229 75%, #a52a2a 75%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #443229 25%,#a52a2a 25%,#a52a2a 50%,#443229 50%,#443229 75%,#a52a2a 75%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #443229 25%,#a52a2a 25%,#a52a2a 50%,#443229 50%,#443229 75%,#a52a2a 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#443229', endColorstr='#a52a2a',GradientType=1 ); /* IE6-9 */
+    background-position: 0 0;
+
+    animation: doggo-scroll;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+
+#header-top > #header-img
+{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    background-image: url("DOG.jpg");
+    background-repeat: repeat;
+    background-size: 128px 128px;
+
+    animation: doggo-scroll 3s infinite;
+    animation-timing-function: linear;
+}
+
+#header-top > #header-title
+{
+    font-family: bm_font;
+    font-size: 4em;
+    text-align: center;
+
+    /* Center */
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%) rotatez(0deg);
+
+    /* Sine anim */
+    animation: title-wiggle 6s infinite;
+
+    /* Decoration */
+    text-shadow: 0.1em 0.1em rgb(32, 33, 34);
+}
+
+#header-top > #header-text
+{
+    font-family: bm_font;
+    font-size: 2em;
+    text-align: center;
+
+    /* Center */
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%) rotatez(0deg);
+
+    /* Decoration */
+    color: #FFDD00;
+    text-shadow: 0.1em 0.1em rgb(32, 33, 34);
+}
+
+/*
+    HEADER - BOTTOM PART (BLACK BAR)
+    ================
+*/
+#header > #header-bottom
+{
+    /* position: relative; */
+    display: block;
+    content: "";
+    height: 64px;
+
+    /* Pretty */
+    background-color: black;
+}
+
+/* Header bar text */
+#header-bottom > span
+{
+    /* Make text fancy */
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 32px;
+
+    /* And position it */
+    position: relative;
+    left: 2%;
+    text-align: left;
+}
+
+/*
+    BODY
+    ====================
+*/
+#body
+{
+    /* width: 100%; */
+    padding: 10em;
+    
+    text-align: center;
+
+    overflow: hidden;
+}
+
+/*
+    BREED LIST
+    ===================
+*/
+#body > .breed-list
+{
+    width: 80%;
+    height: auto;
+    padding: 0;
+    margin: 1em auto 2em auto;
+
+    color: aliceblue;
+    background-color: #a52a2a;
+    box-shadow: rgb(19, 18, 18) 1em 1em;
+}
+
+/* Title of breed list */
+.breed-list > #title
+{
+    font-family: bm_font;
+    font-size: 4em;
+    line-height: 1.42em;
+
+    text-shadow: 0.1em 0.1em rgb(32, 33, 34);
+}
+
+.breed-list > #list
+{
+    height: 256px;
+
+    list-style: lower-greek;
+    list-style-position: inside;
+
+    background-color: rgb(27, 26, 26);
+    overflow: scroll;
+}
+
+.breed-list > #list > li:nth-child(2n)
+{
+    background-color: rgb(32, 33, 34);
+}
+
+/*
+    LIST
+    ===================
+*/
+#body > .list
+{
+    position: relative;
+    display: block;
+    width: 70%;
+    height: 128px;
+    margin: 0 auto 2em auto;
+
+    background-color: rgb(54, 55, 65);
+    box-shadow: rgb(19, 18, 18) 1em 1em;
+
+    /* Appear anim */
+    animation: doggo-swooce-appear;
+    animation-duration: 0.24s;
+    animation-iteration-count: 1;
+}
+
+.list > #thumbnail
+{
+    position: relative;
+    display: block;
+    width: 128px;
+    height: 128px;
+
+    float: left;
+
+    background-color: brown;
+    background-image: url("DOG_DANCE.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+
+    /* animation-name: dog-spin;
+    animation-duration: 0.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; */
+}
+
+.list > #desc
+{
+    display: block;
+    height: 128px;
+    line-height: 128px;
+    padding: 0 2em 0 2em;
+
+    color: #FFDD00;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Page Title</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+<body>
+    <!-- Dog header -->
+    <div id="header">
+        <div id="header-top">
+            <!-- This is where the picture goes -->
+            <!-- <div id="header-img"></div> -->
+            <!-- And text I guess -->
+            <span id="header-title">멍댕이<br>나만업서</span>
+            <span id="header-text">나의 베이컨 어뢰를 맛보고 싶구나</span>
+        </div>
+        <div id="header-bottom">
+            <!-- Navvar and such -->
+            <span>ABCDEFG</span>
+        </div>
+    </div>
+
+    <!-- Dog body -->
+    <div id="body">
+        <button onclick="addRandomListMaster()">이야호</button>
+        <button onclick="deleteAll()">치워라</button>
+        <button onclick="fetchAllDog()">댕댕이들 불러오기</button>
+
+
+        <div class="breed-list">
+            <span id="title">댕댕이들.txt</span>
+            <ul id="list">
+                <li>ONE</li>
+                <li>TWO</li>
+                <li>THREE</li>
+            </ul>
+        </div>
+        <div class="list">
+            <div id="thumbnail"></div>
+            <span id="desc">
+                댕댕이 ä ã ö
+            </span>
+        </div>
+    </div>
+</body>
+</html>
