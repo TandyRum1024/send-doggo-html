@@ -1,4 +1,8 @@
 /*
+    멍멍이 나만없어 : 강아지 사진 브라우저
+    안유빈@2018
+*/
+/*
     DOG API : 
     Every request looks something like this (JSON) :
     {
@@ -12,6 +16,35 @@
     https://dog.ceo/api/breed/<BREED>/list - Gets sub-breed
 */
 
+/*
+    Global variables
+    =================================================================================
+*/
+var dogBreedList = []; // List of breeds
+var loadingThumbnails = ["thumbLoad1.png", "thumbLoad2.png", "thumbLoad3.png"]; // Random list of loading placeholder images
+
+/*
+    Function to translate the breeds text to fancier, Translated version.
+    =================================================================================
+*/
+function translateBreed (text)
+{
+    if (text in breedTranslateKR && breedTranslateKR[text] != "")
+        text = breedTranslateKR[text];
+    else
+        console.log("ERROR WHILE TRANSLATING - TRANSLATE DOESN'T EXIST : " + text);
+
+    return text;
+}
+
+/*
+    Function to fetch the DOG API
+    ---
+    url - The url to send sequest
+    callback - Callback function that will be executed after done loading. (Will pass the respond's content!)
+    pass - The variable that will be passed to the callback function
+    =================================================================================
+*/
 function dogFetch (url, callback, pass)
 {
     var request = new XMLHttpRequest();
@@ -33,7 +66,7 @@ function dogFetch (url, callback, pass)
 
             if (responseJson.status == "success")
             {
-                console.log("DOG API SUCCESS");
+                // console.log("DOG API SUCCESS");
                 callback(responseJson.message, pass);
             }
             else
@@ -42,13 +75,22 @@ function dogFetch (url, callback, pass)
                 callback(null);
             }
         }
-    }
+    };
+    request.onerror = function()
+    {
+        console.log("REQUEST ERROR : " + toString(this.statusText));
+    };
+
 
     request.open("GET", url, true);
     request.send(null);
 }
 
-function fetchAllDog ()
+/*
+    Dog API helpers
+    =================================================================================
+*/
+function fetchAllDogOld ()
 {
     // Fetch blyat
     dogFetch("https://dog.ceo/api/breeds/list/all", function (breeds)
@@ -91,7 +133,9 @@ function fetchAllDog ()
             // Make list
             var listElem = addList();
             var listDescNode = listElem.querySelector("#desc");
-            listDescNode.textContent = breedStr;
+
+            // translate
+            listDescNode.textContent = translateBreed(breedStr);
 
             dogFetch("https://dog.ceo/api/breed/" + breedStr + "/images/random",
             function(url, listElem)
@@ -111,6 +155,92 @@ function fetchAllDog ()
     });
 }
 
+// Fetch button handler - Init
+function listAllInit ()
+{
+    deleteAll();
+    fetchAllBreeds(listAllDone);
+}
+
+// Fetch button handler - Done
+function listAllDone ()
+{
+    // Update list
+    var bodyNode = document.getElementById("body");
+    var breedListNode = bodyNode.querySelector(".breed-list > #list");
+    
+    // Clear list
+    var breedChilds = breedListNode.childNodes;
+    while (breedListNode.childNodes.length > 0)
+        breedListNode.removeChild(breedChilds[0]);
+
+    // Add list
+    dogBreedList.forEach(breed =>
+        {
+            var li = document.createElement("li");
+            li.appendChild(document.createTextNode(breed + " => KO[" + translateBreed(breed) + "]"));
+
+            breedListNode.appendChild(li);
+        });
+
+    // Build queue
+    var breedQueue = [];
+    var head = 0, ass = 0;
+    dogBreedList.forEach(breed =>
+        {
+            breedQueue[ass++] =  [breed, translateBreed(breed)];
+        });
+
+    // Dequeue and add list in some intervals
+    var dequeueLoop = setInterval(function ()
+    {
+        // If there's no such breeds left to dequeue
+        if (head >= ass)
+        {
+            clearInterval(dequeueLoop);
+            return;
+        }
+
+        // If not, Keep dequeueing and adding list
+        var breedStr = breedQueue[head++]; // Dequeue - get value, head++
+        var listElem = addList();
+
+        // Set list's contents
+        listElem.querySelector("#desc").textContent = breedStr[1]; // Translate & Set list title
+        dogFetch("https://dog.ceo/api/breed/" + breedStr[0] + "/images/random", function (thumburl)
+        {
+            // Thumbnail; Fetch & Uses callbackfunction to set it!
+            updateThumbnail(listElem.querySelector("#thumbnail"), thumburl);
+        });
+        
+        // Debug : Only do it once for testing
+        // console.log(breedQueue);
+        // clearInterval(dequeueLoop);
+    }, 100); // 42 kek
+}
+
+// Fetches all dogs breed and stores in breedList
+function fetchAllBreeds (callback)
+{
+    dogFetch("https://dog.ceo/api/breeds/list/all", function (allbreeds)
+    {
+        // Clear breeds dict & fill it w/ breeds
+        dogBreedList = [];
+
+        for (breed in allbreeds)
+        {
+            dogBreedList.push(breed);
+        }
+
+        if (callback)
+            callback();
+    });
+}
+
+/*
+    Adds random list and updates its picture to a random dog image
+    =================================================================================
+*/
 function addRandomListMaster ()
 {
     // A] Make list first, Update image later? maybe I can pass the image div to the callback function...
@@ -136,8 +266,13 @@ function addRandomListMaster ()
                                                         , listElem);
 }
 
+/*
+    Adds list
+    =================================================================================
+*/
 function addList ()
 {
+    // Default breed text
     var dogFirst = new Array("시베리안 ", "웰시 ", "단단한 ", "댕댕이 ", "진돗", "개같은 ", "골든 ");
     var dogLast = new Array("개", "허스키", "코기", "치와와", "포메나리안", "댕댕이", "리트리버", "홍길동", "철수");
     
@@ -158,7 +293,9 @@ function addList ()
     // Thumbnail of list entry
     var thumbElem = document.createElement("div");
     thumbElem.id = "thumbnail";
-    // thumbElem.style.backgroundImage = "url("+thumburl+")";
+    // Random loading image
+    var randomIdx = Math.floor(Math.random() * loadingThumbnails.length);
+    thumbElem.style.backgroundImage = "url("+loadingThumbnails[randomIdx]+")";
 
     // Add node
     listElem.appendChild(thumbElem);
@@ -172,7 +309,10 @@ function addList ()
 
 function updateThumbnail (thumbElem, url)
 {
-    thumbElem.style.backgroundImage = "url(" + url + ")";
+    var thumbImg = new Image();
+    thumbImg.src = url;
+    thumbImg.onload = function () { thumbElem.style.backgroundImage = "url(" + url + ")"; };
+    thumbImg.onerror = function () { thumbElem.style.backgroundImage = "url(" + url + ")"; };
 }
 
 function deleteAll ()
@@ -184,4 +324,45 @@ function deleteAll ()
         var currentEntry = listList.item(0);
         currentEntry.parentElement.removeChild(currentEntry);
     }
+}
+
+/*
+    =============================================================================================================
+    
+    General website logic
+
+    =============================================================================================================
+*/
+var modalElem = document.querySelector("#modal");
+var isModalOn = false;
+function pageReady ()
+{
+    modalElem = document.querySelector("#modal");
+    
+    var modalOKelem = document.querySelector("#modal > #content > #close");
+    console.log(modalOKelem);
+    modalOKelem.onclick = function ()
+    {
+        hideModal();
+    }
+
+    console.log("READY!");
+}
+
+function showModal (title, content)
+{
+    if (!modalElem)
+        modalElem = document.querySelector("#modal");
+
+    modalElem.querySelector("#content > #title").innerHTML = title;
+    modalElem.querySelector("#content > #desc").innerHTML = content;
+    modalElem.style.display = "block";
+
+    isModalOn = true;
+}
+
+function hideModal ()
+{
+    modalElem.style.display = "none";
+    isModalOn = false;
 }

@@ -9,8 +9,9 @@
 
 @keyframes doggo-swooce-appear
 {
-    0% {transform: translate(100vw, -10vh)}
-    100% {transform: translate(0, 0)}
+    0% { transform: translate(90vw, -10vh); background-color: #9c4444; }
+    70% { background-color: #9c4444; }
+    100% { transform: translate(0, 0); background-color: rgb(54, 55, 65); }
 }
 
 @keyframes title-wiggle
@@ -27,11 +28,20 @@
     100% {transform: rotateZ(360deg); background-color: hsl(359deg, 100%, 50%);}
 }
 
+@keyframes modal-appear
+{
+    0% {transform: translateX(-50%) translateY(-50%) scale(0.1) rotateZ(0deg);}
+    5% {transform: translateX(-50%) translateY(-50%) scale(0.1) rotateZ(-12deg);}
+    80% {transform: translateX(-50%) translateY(-50%) scale(1) rotateZ(6deg);}
+    100% {transform: translateX(-50%) translateY(-50%) scale(1) rotateZ(0deg);}
+}
+
 @font-face
 {
     font-family: bm_font;
     src: url("BMDOHYEON_ttf.ttf");
 }
+
 
 *
 {
@@ -281,7 +291,94 @@ button
     line-height: 128px;
     padding: 0 2em 0 2em;
 
+    font-family: bm_font;
+    font-size: 2em;
     color: #FFDD00;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/*
+    MODAL
+    ================
+*/
+/* BG filler */
+#modal
+{
+    display: none;
+    position: fixed;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* center */
+    line-height: 42px;
+    text-align: center;
+
+    background-color: rgb(32, 33, 34, 75%);
+}
+
+#modal > #content
+{
+    position: fixed;
+    display: block;
+    width: 420px;
+    height: 256px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    font-family: bm_font;
+    background-color: rgb(54, 55, 65);
+
+    /* Appear smooth af */
+    animation: modal-appear 0.25s 1;
+    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+/* Title bar */
+#modal > #content > #title
+{
+    display: block;
+    width: 100%;
+    height: 42px;
+    
+    /* center */
+    line-height: 42px;
+    text-align: center;
+
+    background-color: #a52a2a;
+}
+
+/* description */
+#modal > #content > #desc
+{
+    display: block;
+    
+    /* center */
+    line-height: 214px;
+    text-align: center;
+}
+
+/* close button */
+#modal > #content > #close
+{
+    display: block;
+    width: 100%;
+    height: 42px;
+    bottom: 0;
+    
+    /* center */
+    line-height: 42px;
+    text-align: center;
+
+    font-size: 2em;
+    font-weight: bold;
+    background-color: #FFDD00;
+    color: rgb(19, 18, 18);
+
+    /* cursor to click */
+    cursor: pointer;
 }
