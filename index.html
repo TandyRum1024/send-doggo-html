@@ -4,17 +4,18 @@
     <meta charset="utf-8" />
     <title>Page Title</title>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="dogbreeds.js"></script>
     <script src="main.js"></script>
 </head>
-<body>
+<body onload="pageReady()">
     <!-- Dog header -->
     <div id="header">
         <div id="header-top">
             <!-- This is where the picture goes -->
             <!-- <div id="header-img"></div> -->
             <!-- And text I guess -->
-            <span id="header-title">멍댕이<br>나만업서</span>
-            <span id="header-text">나의 베이컨 어뢰를 맛보고 싶구나</span>
+            <span id="header-title">강아지<br>나만업서</span>
+            <span id="header-text">강아지 사진 브라우저</span>
         </div>
         <div id="header-bottom">
             <!-- Navvar and such -->
@@ -26,22 +27,38 @@
     <div id="body">
         <button onclick="addRandomListMaster()">이야호</button>
         <button onclick="deleteAll()">치워라</button>
-        <button onclick="fetchAllDog()">댕댕이들 불러오기</button>
+        <button onclick="listAllInit()">댕댕이들 불러오기</button>
+        <button onclick="showModal('재밌는거', '인생은 고통입니다.')">재밌는 사실</button>
 
 
         <div class="breed-list">
-            <span id="title">댕댕이들.txt</span>
+            <span id="title">견종 (디버깅용)</span>
             <ul id="list">
                 <li>ONE</li>
                 <li>TWO</li>
                 <li>THREE</li>
             </ul>
         </div>
+
         <div class="list">
             <div id="thumbnail"></div>
             <span id="desc">
-                댕댕이 ä ã ö
+                이케아 미트볼 ä ã ö?
             </span>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal">
+
+        <!-- we seperate it for backdrop -->
+        <div id="content">
+            <!-- Title bar -->
+            <span id="title">중요한 무언가</span>
+            <!-- Description -->
+            <span id="desc">뭐야 이게;</span>
+            <!-- Button -->
+            <span id="close">OK</span>
         </div>
     </div>
 </body>
