@@ -40,16 +40,19 @@
             </ul>
         </div>
 
-        <div class="list">
-            <div id="thumbnail"></div>
-            <span id="desc">
-                이케아 미트볼 ä ã ö?
-            </span>
-        </div>
+        <!-- List -->
+        <ul class="list">
+            <li class="list-entry">
+                <div id="thumbnail"></div>
+                <span id="desc">
+                    이케아 미트볼 ä ã ö?
+                </span>
+            </li>
+        </ul>
     </div>
 
     <!-- Modal -->
-    <div id="modal">
+    <div class="modal" id="msg">
 
         <!-- we seperate it for backdrop -->
         <div id="content">
@@ -59,6 +62,22 @@
             <span id="desc">뭐야 이게;</span>
             <!-- Button -->
             <span id="close">OK</span>
+        </div>
+    </div>
+
+    <!-- Modal#2, Dog pics -->
+    <div class="modal" id="pic">
+
+        <!-- we seperate it for backdrop -->
+        <div id="content">
+            <!-- Title bar / Dog species -->
+            <span id="title">중요한 무언가</span>
+            <!-- Dog pic -->
+            <img id="pic"></img>
+            <!-- Button -->
+            <span class="control" id="close">CLOSE</span>
+            <span class="control" id="next">></span>
+            <span class="control" id="prev"><</span>
         </div>
     </div>
 </body>

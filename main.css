@@ -248,6 +248,11 @@ button
 */
 #body > .list
 {
+    /* oh wow */
+}
+
+.list > .list-entry
+{
     position: relative;
     display: block;
     width: 70%;
@@ -263,7 +268,7 @@ button
     animation-iteration-count: 1;
 }
 
-.list > #thumbnail
+.list-entry > #thumbnail
 {
     position: relative;
     display: block;
@@ -284,7 +289,7 @@ button
     animation-timing-function: linear; */
 }
 
-.list > #desc
+.list-entry > #desc
 {
     display: block;
     height: 128px;
@@ -298,12 +303,13 @@ button
     text-overflow: ellipsis;
 }
 
+
 /*
     MODAL
     ================
 */
 /* BG filler */
-#modal
+.modal
 {
     display: none;
     position: fixed;
@@ -320,7 +326,7 @@ button
     background-color: rgb(32, 33, 34, 75%);
 }
 
-#modal > #content
+#msg > #content
 {
     position: fixed;
     display: block;
@@ -339,7 +345,7 @@ button
 }
 
 /* Title bar */
-#modal > #content > #title
+#msg > #content > #title
 {
     display: block;
     width: 100%;
@@ -353,7 +359,7 @@ button
 }
 
 /* description */
-#modal > #content > #desc
+#msg > #content > #desc
 {
     display: block;
     
@@ -381,4 +387,26 @@ button
 
     /* cursor to click */
     cursor: pointer;
+}
+
+/*
+    PICTURE VIEWER
+    ================
+*/
+/* BG filler */
+#pic.modal
+{
+    display: none;
+    position: fixed;
+    content: "";
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* center */
+    line-height: 42px;
+    text-align: center;
+
+    background-color: rgb(32, 33, 34, 75%);
 }

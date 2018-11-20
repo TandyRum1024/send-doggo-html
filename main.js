@@ -276,14 +276,15 @@ function addList ()
     var dogFirst = new Array("시베리안 ", "웰시 ", "단단한 ", "댕댕이 ", "진돗", "개같은 ", "골든 ");
     var dogLast = new Array("개", "허스키", "코기", "치와와", "포메나리안", "댕댕이", "리트리버", "홍길동", "철수");
     
-    var bodyNode = document.getElementById("body");
+    var list = docuemnt.querySelector("#body > .list");
     
     // List base
-    var listElem = document.createElement("div");
-    listElem.className = "list";
+    var listEntry = document.createElement("li");
+    listentry.className = "list-entry";
 
-    // Description of list entry
-    var descElem = document.createElement("span");
+    // components of entry
+    var entryDesc = document.createElement("span");
+    var entryDiv = document.createElement("div");
 
     var randomX = Math.floor(Math.random() * dogFirst.length);
     var randomY = Math.floor(Math.random() * dogLast.length);
