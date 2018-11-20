@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Page Title</title>
+    <title>댕댕이 나만없어</title>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="dogbreeds.js"></script>
     <script src="main.js"></script>
@@ -19,15 +19,15 @@
         </div>
         <div id="header-bottom">
             <!-- Navvar and such -->
-            <span>ABCDEFG</span>
+            <span>제 호버크래프트에는 다량의 장어가 함유되어있습니다</span>
         </div>
     </div>
 
     <!-- Dog body -->
     <div id="body">
-        <button onclick="addRandomListMaster()">이야호</button>
-        <button onclick="deleteAll()">치워라</button>
-        <button onclick="listAllInit()">댕댕이들 불러오기</button>
+        <button onclick="addRandomListMaster()">add</button>
+        <button onclick="deleteAll()">blyat</button>
+        <button onclick="listAllInit()">ＳＥＮＤ ＤＯＧＳ</button>
         <button onclick="showModal('재밌는거', '인생은 고통입니다.')">재밌는 사실</button>
 
 
@@ -45,7 +45,19 @@
             <li class="list-entry">
                 <div id="thumbnail"></div>
                 <span id="desc">
-                    이케아 미트볼 ä ã ö?
+                    UNO
+                </span>
+            </li>
+            <li class="list-entry">
+                <div id="thumbnail"></div>
+                <span id="desc">
+                    DOS
+                </span>
+            </li>
+            <li class="list-entry">
+                <div id="thumbnail"></div>
+                <span id="desc">
+                    TRES
                 </span>
             </li>
         </ul>
@@ -73,11 +85,11 @@
             <!-- Title bar / Dog species -->
             <span id="title">중요한 무언가</span>
             <!-- Dog pic -->
-            <img id="pic"></img>
+            <img id="pic" src="TEST1.jpg"></img>
             <!-- Button -->
             <span class="control" id="close">CLOSE</span>
-            <span class="control" id="next">></span>
-            <span class="control" id="prev"><</span>
+            <span class="control" id="next" onclick="nextpic()">></span>
+            <span class="control" id="prev" onclick="prevpic()"><</span>
         </div>
     </div>
 </body>

@@ -42,6 +42,11 @@
     src: url("BMDOHYEON_ttf.ttf");
 }
 
+@font-face
+{
+    font-family: chinese;
+    src: url("CHINESEROCKS.ttf");
+}
 
 *
 {
@@ -124,8 +129,14 @@ button
 
 #header-top > #header-title
 {
+    
     font-family: bm_font;
     font-size: 4em;
+    /*
+    font-family: chinese;
+    letter-spacing: 10px;
+    font-size: 5em;
+    */
     text-align: center;
 
     /* Center */
@@ -249,17 +260,20 @@ button
 #body > .list
 {
     /* oh wow */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .list > .list-entry
 {
     position: relative;
     display: block;
-    width: 70%;
-    height: 128px;
+    width: 200px;
+    height: 192px;
     margin: 0 auto 2em auto;
 
-    background-color: rgb(54, 55, 65);
+    /* background-color: rgb(54, 55, 65); */
     box-shadow: rgb(19, 18, 18) 1em 1em;
 
     /* Appear anim */
@@ -272,10 +286,8 @@ button
 {
     position: relative;
     display: block;
-    width: 128px;
+    width: 200px;
     height: 128px;
-
-    float: left;
 
     background-color: brown;
     background-image: url("DOG_DANCE.png");
@@ -292,15 +304,16 @@ button
 .list-entry > #desc
 {
     display: block;
-    height: 128px;
-    line-height: 128px;
-    padding: 0 2em 0 2em;
+    width: 200px;
+    height: 64px;
+    line-height: 64px;
+    /* padding: 0 2em 0 2em; */
 
     font-family: bm_font;
-    font-size: 2em;
+    font-size: 1.5em;
+
     color: #FFDD00;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    background-color: rgb(54, 55, 65);
 }
 
 
@@ -369,7 +382,7 @@ button
 }
 
 /* close button */
-#modal > #content > #close
+#msg > #content > #close
 {
     display: block;
     width: 100%;
@@ -409,4 +422,47 @@ button
     text-align: center;
 
     background-color: rgb(32, 33, 34, 75%);
+}
+
+#pic > #content
+{
+    display: block;
+}
+
+/* Picture frame */
+#pic > #content > #pic
+{
+    top: 25vh;
+    left: 50%;
+    width: auto;
+    height: 50vh;
+    
+    /* center */
+    /* transform: translateX(-50%); */
+    background-color: rgb(54, 55, 65);
+}
+
+/* Title */
+#pic > #content > #title
+{
+    display: block;
+    top: 20vh;
+    width: 100%;
+    height: 5vh;
+    
+    /* center */
+    /* transform: translateX(-50%); */
+    background-color: rgb(54, 55, 65);
+}
+
+/* Buttons */
+#pic > #content > .control
+{
+    display: block;
+    width: 100%;
+    height: 5vh;
+    
+    /* center */
+    /* transform: translateX(-50%); */
+    background-color: rgb(54, 55, 65);
 }

@@ -206,7 +206,7 @@ function listAllDone ()
         var listElem = addList();
 
         // Set list's contents
-        listElem.querySelector("#desc").textContent = breedStr[1]; // Translate & Set list title
+        listElem.querySelector("#desc").textContent = breedStr[0]; // Translate & Set list title
         dogFetch("https://dog.ceo/api/breed/" + breedStr[0] + "/images/random", function (thumburl)
         {
             // Thumbnail; Fetch & Uses callbackfunction to set it!
@@ -276,36 +276,36 @@ function addList ()
     var dogFirst = new Array("시베리안 ", "웰시 ", "단단한 ", "댕댕이 ", "진돗", "개같은 ", "골든 ");
     var dogLast = new Array("개", "허스키", "코기", "치와와", "포메나리안", "댕댕이", "리트리버", "홍길동", "철수");
     
-    var list = docuemnt.querySelector("#body > .list");
+    var list = document.querySelector("#body > .list");
     
     // List base
-    var listEntry = document.createElement("li");
+    var listentry = document.createElement("li");
     listentry.className = "list-entry";
 
     // components of entry
     var entryDesc = document.createElement("span");
-    var entryDiv = document.createElement("div");
+    var entryImg = document.createElement("div");
 
+    // Set desc to random gibberish
     var randomX = Math.floor(Math.random() * dogFirst.length);
     var randomY = Math.floor(Math.random() * dogLast.length);
-    descElem.appendChild(document.createTextNode(dogFirst[randomX] + dogLast[randomY]));
-    descElem.id = "desc";
+    entryDesc.appendChild(document.createTextNode(dogFirst[randomX] + dogLast[randomY]));
+    entryDesc.id = "desc";
 
-    // Thumbnail of list entry
-    var thumbElem = document.createElement("div");
-    thumbElem.id = "thumbnail";
-    // Random loading image
+    // Set thumbnial to random doggo :D
+    entryImg.id = "thumbnail";
+
     var randomIdx = Math.floor(Math.random() * loadingThumbnails.length);
-    thumbElem.style.backgroundImage = "url("+loadingThumbnails[randomIdx]+")";
+    entryImg.style.backgroundImage = "url("+loadingThumbnails[randomIdx]+")";
 
     // Add node
-    listElem.appendChild(thumbElem);
-    listElem.appendChild(descElem);
+    listentry.appendChild(entryImg);
+    listentry.appendChild(entryDesc);
 
-    bodyNode.appendChild(listElem);
+    list.appendChild(listentry);
 
     // Return list
-    return listElem;
+    return listentry;
 }
 
 function updateThumbnail (thumbElem, url)
@@ -318,7 +318,7 @@ function updateThumbnail (thumbElem, url)
 
 function deleteAll ()
 {
-    var listList = document.getElementsByClassName("list"); // AEUHHH?
+    var listList = document.getElementsByClassName("list-entry"); // AEUHHH?
 
     while (listList.length >= 1)
     {
@@ -334,13 +334,13 @@ function deleteAll ()
 
     =============================================================================================================
 */
-var modalElem = document.querySelector("#modal");
+var msgElem = document.querySelector("#msg.modal");
 var isModalOn = false;
 function pageReady ()
 {
-    modalElem = document.querySelector("#modal");
+    msgElem = document.querySelector("#msg.modal");
     
-    var modalOKelem = document.querySelector("#modal > #content > #close");
+    var modalOKelem = document.querySelector("#msg > #content > #close");
     console.log(modalOKelem);
     modalOKelem.onclick = function ()
     {
@@ -352,18 +352,42 @@ function pageReady ()
 
 function showModal (title, content)
 {
-    if (!modalElem)
-        modalElem = document.querySelector("#modal");
+    if (!msgElem)
+    msgElem = document.querySelector("#msg.modal");
 
-    modalElem.querySelector("#content > #title").innerHTML = title;
-    modalElem.querySelector("#content > #desc").innerHTML = content;
-    modalElem.style.display = "block";
+    msgElem.querySelector("#content > #title").innerHTML = title;
+    msgElem.querySelector("#content > #desc").innerHTML = content;
+    msgElem.style.display = "block";
 
     isModalOn = true;
 }
 
 function hideModal ()
 {
-    modalElem.style.display = "none";
+    msgElem.style.display = "none";
     isModalOn = false;
+}
+
+var dogpics = new Array ("TEST1.jpg", "TEST2.jpg", "TEST3.jpg");
+var picidx = 0;
+function nextpic ()
+{
+    // Increment idx
+    picidx++;
+    if (picidx >= dogpics.length) picidx -= dogpics.length;
+
+    // change pic
+    var imgelem = document.querySelector("#pic.modal > #content > #pic");
+    imgelem.attributes.src = dogpics[picidx];
+}
+
+function prevpic ()
+{
+    // Increment idx
+    picidx++;
+    if (picidx >= dogpics.length) picidx -= dogpics.length;
+
+    // change pic
+    var imgelem = document.querySelector("#pic.modal > #content > #pic");
+    imgelem.attributes.src = dogpics[picidx];
 }
