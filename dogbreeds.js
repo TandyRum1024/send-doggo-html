@@ -53,7 +53,7 @@ var breedTranslateKR =
     "leonberg" : "레온베르거",
     "lhasa" : "라사 압소",
     "malamute" : "말라무트",
-    "malinois" : "말라누아 (벨지언 셰퍼드 독)",
+    "malinois" : "말라누아<br>(벨지언 셰퍼드 독)",
     "maltese" : "말티즈",
     "mastiff" : "마스티프",
     "mexicanhairless" : "멕시칸 헤어리스 독",

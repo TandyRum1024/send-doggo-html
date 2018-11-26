@@ -22,6 +22,15 @@
 */
 var dogBreedList = []; // List of breeds
 var loadingThumbnails = ["thumbLoad1.png", "thumbLoad2.png", "thumbLoad3.png"]; // Random list of loading placeholder images
+var lists = []; // List of entries
+var msgModal = document.querySelector("#msg.modal");
+var picModal = document.querySelector("#pic.modal");
+var isMsgOn = false;
+
+// picture modal
+var picqueue = ["TEST1.jpg"]; // picture list
+var picidx = 0; // current picture idx
+var picBreedId = "beagle"; // current viewing breed id
 
 /*
     Function to translate the breeds text to fancier, Translated version.
@@ -79,6 +88,7 @@ function dogFetch (url, callback, pass)
     request.onerror = function()
     {
         console.log("REQUEST ERROR : " + toString(this.statusText));
+        
     };
 
 
@@ -135,7 +145,7 @@ function fetchAllDogOld ()
             var listDescNode = listElem.querySelector("#desc");
 
             // translate
-            listDescNode.textContent = translateBreed(breedStr);
+            listDescNode.innerHTML = translateBreed(breedStr);
 
             dogFetch("https://dog.ceo/api/breed/" + breedStr + "/images/random",
             function(url, listElem)
@@ -169,6 +179,7 @@ function listAllDone ()
     var bodyNode = document.getElementById("body");
     var breedListNode = bodyNode.querySelector(".breed-list > #list");
     
+    /*
     // Clear list
     var breedChilds = breedListNode.childNodes;
     while (breedListNode.childNodes.length > 0)
@@ -182,6 +193,7 @@ function listAllDone ()
 
             breedListNode.appendChild(li);
         });
+    */
 
     // Build queue
     var breedQueue = [];
@@ -206,17 +218,24 @@ function listAllDone ()
         var listElem = addList();
 
         // Set list's contents
-        listElem.querySelector("#desc").textContent = breedStr[0]; // Translate & Set list title
+        listElem.querySelector("#desc").innerHTML = breedStr[1]; // Translate & Set list title
         dogFetch("https://dog.ceo/api/breed/" + breedStr[0] + "/images/random", function (thumburl)
         {
             // Thumbnail; Fetch & Uses callbackfunction to set it!
             updateThumbnail(listElem.querySelector("#thumbnail"), thumburl);
         });
+
+        // Set click event
+        setListClickCallback(listElem, function ()
+        {
+            resetPic(breedStr[0]);
+            showPic();
+        });
         
         // Debug : Only do it once for testing
         // console.log(breedQueue);
         // clearInterval(dequeueLoop);
-    }, 100); // 42 kek
+    }, 42); // 42 kek
 }
 
 // Fetches all dogs breed and stores in breedList
@@ -225,15 +244,22 @@ function fetchAllBreeds (callback)
     dogFetch("https://dog.ceo/api/breeds/list/all", function (allbreeds)
     {
         // Clear breeds dict & fill it w/ breeds
-        dogBreedList = [];
-
-        for (breed in allbreeds)
+        if (allbreeds)
         {
-            dogBreedList.push(breed);
+            dogBreedList = [];
+    
+            for (breed in allbreeds)
+            {
+                dogBreedList.push(breed);
+            }
+    
+            if (callback)
+                callback();
         }
-
-        if (callback)
-            callback();
+        else
+        {
+            showModal("OH NO", "견종을 받아오는 중 에러가 났어요");
+        }
     });
 }
 
@@ -308,12 +334,57 @@ function addList ()
     return listentry;
 }
 
+function setListClickCallback (listelem, callback)
+{
+    var entryImg = listelem.querySelector("#thumbnail");
+    entryImg.onclick = callback;
+}
+
 function updateThumbnail (thumbElem, url)
 {
     var thumbImg = new Image();
     thumbImg.src = url;
     thumbImg.onload = function () { thumbElem.style.backgroundImage = "url(" + url + ")"; };
     thumbImg.onerror = function () { thumbElem.style.backgroundImage = "url(" + url + ")"; };
+}
+
+/*
+    Function to check the elements of image queue's type and update the gallery pic
+    ===============================================================================
+*/
+function updateGalleryPic (idx)
+{
+    var picElem = document.querySelector("#pic.modal > #content > #wrapper > #pic");
+    
+    var pic = picqueue[idx];
+    
+    if ((typeof pic) == "object") // Img
+    {
+        if (pic.complete)
+        {
+            picElem.src = pic.src;
+        }
+        else
+        {
+            picElem.src = "picLoad.png";
+            pic.onload = function ()
+            {
+                picElem.src = this.src;
+            }
+        }
+    }
+    else // Internal File
+        picElem.src = pic;
+}
+
+/*
+    Function to directly change gallery picture
+    ===========================================
+*/
+function setGalleryPic (url)
+{
+    var picElem = document.querySelector("#pic.modal > #content > #wrapper > #pic");
+    picElem.src = url;
 }
 
 function deleteAll ()
@@ -334,11 +405,11 @@ function deleteAll ()
 
     =============================================================================================================
 */
-var msgElem = document.querySelector("#msg.modal");
-var isModalOn = false;
+
 function pageReady ()
 {
-    msgElem = document.querySelector("#msg.modal");
+    msgModal = document.querySelector("#msg.modal");
+    picModal = document.querySelector("#pic.modal");
     
     var modalOKelem = document.querySelector("#msg > #content > #close");
     console.log(modalOKelem);
@@ -347,47 +418,137 @@ function pageReady ()
         hideModal();
     }
 
+    var imgCloseelem = document.querySelector("#pic > #content > #close");
+    console.log(imgCloseelem);
+    imgCloseelem.onclick = function ()
+    {
+        hidePic();
+    }
+
+    // Fetch breeds
+    fetchAllBreeds(listAllDone);
+    resetPic("beagle");
+
     console.log("READY!");
 }
 
 function showModal (title, content)
 {
-    if (!msgElem)
-    msgElem = document.querySelector("#msg.modal");
+    if (!msgModal)
+        msgModal = document.querySelector("#msg.modal");
 
-    msgElem.querySelector("#content > #title").innerHTML = title;
-    msgElem.querySelector("#content > #desc").innerHTML = content;
-    msgElem.style.display = "block";
+    msgModal.querySelector("#content > #title").innerHTML = title;
+    msgModal.querySelector("#content > #desc").innerHTML = content;
+    msgModal.style.display = "block";
 
-    isModalOn = true;
+    isMsgOn = true;
 }
 
 function hideModal ()
 {
-    msgElem.style.display = "none";
-    isModalOn = false;
+    msgModal.style.display = "none";
+    isMsgOn = false;
 }
 
-var dogpics = new Array ("TEST1.jpg", "TEST2.jpg", "TEST3.jpg");
-var picidx = 0;
-function nextpic ()
+/*
+    Picture modal related shit
+    ============================================
+*/
+function showPic ()
+{
+    if (!picModal)
+        picModal = document.querySelector("#pic.modal");
+
+    picModal.style.display = "block";
+}
+
+function hidePic ()
+{
+    if (!picModal)
+        picModal = document.querySelector("#pic.modal");
+        
+    picModal.style.display = "none";
+}
+
+/*
+    Function to reset the queue & load new breed
+    =======================================================
+*/
+function resetPic (breed)
+{
+    // Show loading image
+    setGalleryPic("picLoad.png");
+
+    // clear pic queue
+    picqueue = [];
+    picidx = 0;
+
+    // Update pic queue
+    picBreedId = breed;
+    addPic();
+    addPic();
+}
+
+/*
+    Function to load & add a picture of current breed to the queue
+    =======================================================
+*/
+function addPic (callback)
+{
+    // Preload
+    var img = new Image();
+    img.src = "picLoad.png";
+    picqueue.push(img);
+
+    dogFetch("https://dog.ceo/api/breed/" + picBreedId + "/images/random", function (url)
+    {    
+        img.src = url;
+        updateGalleryPic(picidx); // Juuust in case of the unloaded image loading after we updated into it
+
+        // console.log("PUSH : " + picqueue[picqueue.length - 1]);
+
+        if (callback)
+            callback (url);
+    });
+}
+
+/*
+    Function to handle the picture controls
+    =======================================================
+*/
+function nextPic ()
 {
     // Increment idx
     picidx++;
-    if (picidx >= dogpics.length) picidx -= dogpics.length;
-
-    // change pic
-    var imgelem = document.querySelector("#pic.modal > #content > #pic");
-    imgelem.attributes.src = dogpics[picidx];
+    
+    // Add picture if somehow outta-bounds error happeened
+    if (picidx >= picqueue.length)
+    {
+        // console.log("OVERFLOW : LOADIN'!");
+        addPic();
+    }
+    else // change pic
+    {
+        // console.log("NEXT");
+        updateGalleryPic(picidx);
+    }
+    
+    if (picidx >= picqueue.length - 1) // Prepare picture
+        addPic();
 }
 
-function prevpic ()
+function prevPic ()
 {
     // Increment idx
-    picidx++;
-    if (picidx >= dogpics.length) picidx -= dogpics.length;
+    picidx--;
+    if (picidx < 0) picidx = 0;
+    // TODO: Disable previous button
+
+    // Add picture if overflow
+    if (picidx >= picqueue.length - 1)
+        addPic();
 
     // change pic
-    var imgelem = document.querySelector("#pic.modal > #content > #pic");
-    imgelem.attributes.src = dogpics[picidx];
+    updateGalleryPic(picidx);
 }
+

@@ -48,6 +48,7 @@
     src: url("CHINESEROCKS.ttf");
 }
 
+/* 안쓰는게 좋음 */
 *
 {
     color: blanchedalmond;
@@ -58,6 +59,8 @@
 
 body
 {
+    padding: 0;
+    margin: 0;
     background-color: rgb(32, 33, 34);
 }
 
@@ -95,7 +98,7 @@ button
 {
     display: block;
     content: "";
-    height: 30vh;
+    height: 100vh;
 
     /* background-color: brown; */
     background: #443229; /* Old browsers */
@@ -131,7 +134,8 @@ button
 {
     
     font-family: bm_font;
-    font-size: 4em;
+    font-size: 10em;
+    font-style: italic;
     /*
     font-family: chinese;
     letter-spacing: 10px;
@@ -149,7 +153,9 @@ button
     animation: title-wiggle 6s infinite;
 
     /* Decoration */
-    text-shadow: 0.1em 0.1em rgb(32, 33, 34);
+    text-shadow: 0.15em 0 rgb(212, 71, 158),
+                 0.30em 0 rgb(111, 23, 212),
+                 0.45em 0 rgb(59, 125, 223);
 }
 
 #header-top > #header-text
@@ -204,7 +210,7 @@ button
 #body
 {
     /* width: 100%; */
-    padding: 10em;
+    /* padding: 5em; */
     
     text-align: center;
 
@@ -263,6 +269,7 @@ button
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .list > .list-entry
@@ -271,9 +278,9 @@ button
     display: block;
     width: 200px;
     height: 192px;
-    margin: 0 auto 2em auto;
+    margin: 0.25em;
 
-    /* background-color: rgb(54, 55, 65); */
+    background-color: rgb(54, 55, 65);
     box-shadow: rgb(19, 18, 18) 1em 1em;
 
     /* Appear anim */
@@ -313,7 +320,6 @@ button
     font-size: 1.5em;
 
     color: #FFDD00;
-    background-color: rgb(54, 55, 65);
 }
 
 
@@ -426,14 +432,52 @@ button
 
 #pic > #content
 {
+    position: relative;
     display: block;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    /* Appear anim */
+    animation: modal-appear;
+    animation-duration: 0.24s;
+    animation-iteration-count: 1;
 }
 
-/* Picture frame */
-#pic > #content > #pic
+/* Title */
+#pic > #content > #title
 {
-    top: 25vh;
-    left: 50%;
+    position: relative;
+    display: block;
+    width: 100vw;
+    height: 64px;
+    
+    /* center */
+    /* transform: translateX(-50%); */
+    
+    font-family: bm_font;
+    font-size: 2em;
+    line-height: 64px;
+    background-color: #a52a2a;
+}
+
+/* Wrapper - Picture frame and such */
+#pic > #content > #wrapper
+{
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: rgb(19, 18, 18);
+}
+
+/* picture frame */
+#pic > #content > #wrapper > #pic
+{
+    /* left: 50%; */
     width: auto;
     height: 50vh;
     
@@ -442,27 +486,32 @@ button
     background-color: rgb(54, 55, 65);
 }
 
-/* Title */
-#pic > #content > #title
+/* Buttons */
+#pic > #content > #wrapper > .control
 {
     display: block;
-    top: 20vh;
-    width: 100%;
-    height: 5vh;
+    width: 64px;
+    height: 25vh;
     
     /* center */
     /* transform: translateX(-50%); */
+
+    font-family: chinese;
+    font-size: 2em;
+    line-height: 25vh;
     background-color: rgb(54, 55, 65);
 }
 
-/* Buttons */
-#pic > #content > .control
+/* Speial button for close button */
+#pic > #content > #close
 {
     display: block;
-    width: 100%;
+
+    font-family: chinese;
+    float: none;
     height: 5vh;
-    
-    /* center */
-    /* transform: translateX(-50%); */
+    line-height: 5vh;
+
+    color: #FFDD00;
     background-color: rgb(54, 55, 65);
 }
