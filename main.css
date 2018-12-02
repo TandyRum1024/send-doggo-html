@@ -257,7 +257,7 @@ button
 #header-top > #header-text
 {
     font-family: bm_font;
-    font-size: 2em;
+    font-size: 2vw;
     text-align: center;
 
     /* Center */
@@ -274,7 +274,7 @@ button
 #header-top > #attraction
 {
     font-family: bm_font;
-    font-size: 2em;
+    font-size: 12vw;
     text-align: center;
 
     /* Center */
