@@ -1,5 +1,6 @@
 /* 
-    DOG BG SCROLL ANIM
+    댕댕이 나만없어
+    안유빈@2018
 */
 @keyframes doggo-scroll
 {
@@ -16,16 +17,26 @@
 
 @keyframes title-wiggle
 {
-    0% { transform: translate(-50%, -50%) rotateZ(-12deg); }
-    50% { transform: translate(-50%, -50%) rotateZ(12deg); }
-    100% { transform: translate(-50%, -50%) rotateZ(-12deg); }
+    0% { transform: translate(-50%, -50%) rotateZ(-18deg); }
+    50% { transform: translate(-50%, -50%) rotateZ(18deg); }
+    100% { transform: translate(-50%, -50%) rotateZ(-18deg); }
 }
 
-@keyframes dog-spin
+@keyframes attraction-blink
 {
-    0% {transform: rotateZ(0deg); background-color: hsl(0deg, 100%, 50%);}
-    50% {transform: rotateZ(180deg); background-color: hsl(100deg, 100%, 50%);}
-    100% {transform: rotateZ(360deg); background-color: hsl(359deg, 100%, 50%);}
+    0% { color: rgb(212, 71, 158, 100%); }
+    50% { color: rgb(212, 71, 158, 0%); }
+    100% { color: rgb(212, 71, 158, 100%); }
+}
+
+@keyframes wait-spin {
+    0% {
+        transform:translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform:translate(-50%, -50%) rotate(1turn);
+    }
 }
 
 @keyframes modal-appear
@@ -39,13 +50,25 @@
 @font-face
 {
     font-family: bm_font;
-    src: url("BMDOHYEON_ttf.ttf");
+    src: url("fnt/BMDOHYEON_ttf.ttf");
 }
 
 @font-face
 {
     font-family: chinese;
-    src: url("CHINESEROCKS.ttf");
+    src: url("fnt/CHINESEROCKS.ttf");
+}
+
+@font-face
+{
+    font-family: fontawesome;
+    src: url("fnt/fa-solid-900.ttf");
+}
+
+@font-face
+{
+    font-family: hacksan;
+    src: url("fnt/Hack-NamSan.ttf");
 }
 
 /* 안쓰는게 좋음 */
@@ -66,11 +89,75 @@ body
 
 button
 {
+    display: block;
+    width: 200px;
+    height: 200px;
+
     padding: 1em;
-    background-color: #FFDD00;
+    background-color: #a52a2a;
     color: rgb(19, 18, 18);
 
     border: none;
+}
+
+.fa-icon::before
+{
+    font-family: fontawesome;
+    font-weight: 900;
+
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+}
+
+.fa-sync::before
+{
+    content: "\f021";
+}
+
+.fa-info::before
+{
+    content: "\f129";
+}
+
+/*
+    Buttons
+    ========================
+*/
+
+#main > #buttons
+{
+    display: flex;
+    margin: 1em;
+    
+    flex-direction: row;
+    justify-content: center;
+}
+
+#main > #buttons > .func-button
+{
+    display: block;
+    margin: 0 1em;
+    background-color: #FFDD00;
+}
+
+#main > #buttons > .func-button > .fa-icon
+{
+    display: block;
+    margin: 10px;
+
+    color: rgb(27, 26, 26);
+    font-size: 6em;
+}
+
+#main > #buttons > .func-button > span
+{
+    font-family: bm_font;
+    font-size: 2em;
+    color: rgb(27, 26, 26);
 }
 
 /*
@@ -100,35 +187,43 @@ button
     content: "";
     height: 100vh;
 
+    /* 눈뽕 */
     /* background-color: brown; */
-    background: #443229; /* Old browsers */
-    background: -moz-linear-gradient(left, #443229 25%, #a52a2a 25%, #a52a2a 50%, #443229 50%, #443229 75%, #a52a2a 75%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, #443229 25%,#a52a2a 25%,#a52a2a 50%,#443229 50%,#443229 75%,#a52a2a 75%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, #443229 25%,#a52a2a 25%,#a52a2a 50%,#443229 50%,#443229 75%,#a52a2a 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#443229', endColorstr='#a52a2a',GradientType=1 ); /* IE6-9 */
-    background-position: 0 0;
+    /* background: #443229; /* Old browsers */
+    /* background: -moz-linear-gradient(left, #443229 25%, #a52a2a 25%, #a52a2a 50%, #443229 50%, #443229 75%, #a52a2a 75%); /* FF3.6-15 */
+    /* background: -webkit-linear-gradient(left, #443229 25%,#a52a2a 25%,#a52a2a 50%,#443229 50%,#443229 75%,#a52a2a 75%); /* Chrome10-25,Safari5.1-6 */
+    /* background: linear-gradient(to right, #443229 25%,#a52a2a 25%,#a52a2a 50%,#443229 50%,#443229 75%,#a52a2a 75%); W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    /* filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#443229', endColorstr='#a52a2a',GradientType=1 ); IE6-9 */
+    /* background-position: 0 0; */
 
+    /* 멍멍이 */
+    background-color: #a52a2a;
+    background-image: url("bg/backdrop.gif");
+    background-size: cover;
+
+    /*
     animation: doggo-scroll;
     animation-duration: 0.5s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+    */
 }
 
 
-#header-top > #header-img
+/* #header-top > #header-img
 {
     position: relative;
     display: block;
     width: 100%;
     height: 100%;
 
-    background-image: url("DOG.jpg");
+    background-image: url("bg/DOG.jpg");
     background-repeat: repeat;
     background-size: 128px 128px;
 
     animation: doggo-scroll 3s infinite;
     animation-timing-function: linear;
-}
+} */
 
 #header-top > #header-title
 {
@@ -145,6 +240,7 @@ button
 
     /* Center */
     position: absolute;
+    width: 75vw;
     left: 50%;
     top: 30%;
     transform: translate(-50%, -50%) rotatez(0deg);
@@ -175,6 +271,24 @@ button
     text-shadow: 0.1em 0.1em rgb(32, 33, 34);
 }
 
+#header-top > #attraction
+{
+    font-family: bm_font;
+    font-size: 2em;
+    text-align: center;
+
+    /* Center */
+    position: absolute;
+    left: 50%;
+    top: 80%;
+    transform: translate(-50%, -50%) rotatez(0deg);
+
+    /* Decoration */
+    color: rgb(212, 71, 158);
+    animation: attraction-blink 1s infinite;
+    /* text-shadow: 0.1em 0.1em rgb(32, 33, 34); */
+}
+
 /*
     HEADER - BOTTOM PART (BLACK BAR)
     ================
@@ -193,21 +307,23 @@ button
 /* Header bar text */
 #header-bottom > span
 {
+    display: block;
+
     /* Make text fancy */
-    font-family: 'Times New Roman', Times, serif;
+    /* font-family: 'Times New Roman', Times, serif; */
+    font-family: bm_font;
     font-size: 32px;
+    line-height: 64px;
 
     /* And position it */
-    position: relative;
-    left: 2%;
-    text-align: left;
+    text-align: center;
 }
 
 /*
     BODY
     ====================
 */
-#body
+#main
 {
     /* width: 100%; */
     /* padding: 5em; */
@@ -221,7 +337,7 @@ button
     BREED LIST
     ===================
 */
-#body > .breed-list
+#main > .breed-list
 {
     width: 80%;
     height: auto;
@@ -263,25 +379,31 @@ button
     LIST
     ===================
 */
-#body > .list
+#main > .list
 {
     /* oh wow */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+
+    padding: 2em;
 }
 
 .list > .list-entry
 {
     position: relative;
-    display: block;
+    display: flex;
     width: 200px;
     height: 192px;
-    margin: 0.25em;
+    margin: 0.5em;
 
-    background-color: rgb(54, 55, 65);
-    box-shadow: rgb(19, 18, 18) 1em 1em;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    background-color: rgb(19, 18, 18);
+    /* background-color: rgb(54, 55, 65); */
+    /* box-shadow: rgb(19, 18, 18) 1em 1em; */
 
     /* Appear anim */
     animation: doggo-swooce-appear;
@@ -308,13 +430,20 @@ button
     animation-timing-function: linear; */
 }
 
-.list-entry > #desc
+.list-entry > #container
 {
-    display: block;
-    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 100%;
     height: 64px;
-    line-height: 64px;
-    /* padding: 0 2em 0 2em; */
+}
+
+.list-entry > #container > #desc
+{
+    position: relative;
+    vertical-align: middle;
 
     font-family: bm_font;
     font-size: 1.5em;
@@ -349,14 +478,14 @@ button
 {
     position: fixed;
     display: block;
-    width: 420px;
-    height: 256px;
+    width: 700px;
+    height: 300px;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 
     font-family: bm_font;
-    background-color: rgb(54, 55, 65);
+    background-color: rgb(19, 18, 18);
 
     /* Appear smooth af */
     animation: modal-appear 0.25s 1;
@@ -368,23 +497,29 @@ button
 {
     display: block;
     width: 100%;
-    height: 42px;
+    height: 50px;
     
     /* center */
-    line-height: 42px;
+    line-height: 50px;
     text-align: center;
 
-    background-color: #a52a2a;
+    background-color: #FFDD00;
+    color: rgb(19, 18, 18);
 }
 
 /* description */
 #msg > #content > #desc
 {
     display: block;
-    
+    height: 250px;
+    margin: 0;
+
     /* center */
-    line-height: 214px;
+    font-family: hacksan;
+    font-size: 1em;
     text-align: center;
+
+    color: aliceblue;
 }
 
 /* close button */
@@ -401,8 +536,9 @@ button
 
     font-size: 2em;
     font-weight: bold;
-    background-color: #FFDD00;
-    color: rgb(19, 18, 18);
+    /* background-color: #FFDD00; */
+    background-color: rgb(54, 55, 65);
+    color: aliceblue;
 
     /* cursor to click */
     cursor: pointer;
@@ -457,7 +593,7 @@ button
     /* transform: translateX(-50%); */
     
     font-family: bm_font;
-    font-size: 2em;
+    font-size: 3em;
     line-height: 64px;
     background-color: #a52a2a;
 }
@@ -465,6 +601,8 @@ button
 /* Wrapper - Picture frame and such */
 #pic > #content > #wrapper
 {
+    position: relative;
+
     width: 100vw;
     display: flex;
     flex-direction: row;
@@ -477,28 +615,49 @@ button
 /* picture frame */
 #pic > #content > #wrapper > #pic
 {
+    display: block;
+    content: "";
+
     /* left: 50%; */
     width: auto;
-    height: 50vh;
+    height: 75vh;
+    z-index: 1;
     
     /* center */
     /* transform: translateX(-50%); */
-    background-color: rgb(54, 55, 65);
+    /* background-color: rgb(54, 55, 65); */
+}
+
+/* Loading spinny stuff */
+#pic > #content > #wrapper > #load-spin
+{
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    width: 128px;
+    height: 128px;
+    /* font-size: 6em; */
+}
+
+#pic > #content > #wrapper > #load-spin > #icon
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    animation: wait-spin 1s linear infinite;
 }
 
 /* Buttons */
 #pic > #content > #wrapper > .control
 {
     display: block;
-    width: 64px;
-    height: 25vh;
-    
-    /* center */
-    /* transform: translateX(-50%); */
+    width: 128px;
+    height: 128px;
 
     font-family: chinese;
-    font-size: 2em;
-    line-height: 25vh;
+    font-size: 4em;
+    line-height: 128px;
     background-color: rgb(54, 55, 65);
 }
 
@@ -506,12 +665,13 @@ button
 #pic > #content > #close
 {
     display: block;
+    float: none;
+    height: 64px;
+    line-height: 64px;
 
     font-family: chinese;
-    float: none;
-    height: 5vh;
-    line-height: 5vh;
+    font-size: 3em;
 
-    color: #FFDD00;
-    background-color: rgb(54, 55, 65);
+    color: rgb(19, 18, 18);
+    background-color: #FFDD00;
 }

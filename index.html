@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <title>댕댕이 나만없어</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity="sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity="sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="main.css" />
     <script src="dogbreeds.js"></script>
 </head>
 <body>
@@ -13,20 +15,32 @@
             <!-- This is where the picture goes -->
             <!-- <div id="header-img"></div> -->
             <!-- And text I guess -->
-            <h1 id="header-title">댕댕이<br>나만없어</h1>
-            <p id="header-text">강아지 사진 브라우저<br>설명1<br>설명2<br>(배경은 임시입니다 대신 눈뽕당해주세요)</p>
+            <h1 id="header-title">댕댕이<br>나만없어 ★</h1>
+            <p id="header-text">랜선 반려인을 위한<br>귀여운<br>강아지 사진 브라우저</p>
+            <p id="attraction">아래로 스크롤하세요!</p>
         </div>
         <div id="header-bottom">
             <!-- Navvar and such -->
-            <span>안유빈@2018 쓸데가 있을진 모르겠지만 사용시 동의를 구하세요</span>
+            <span>안유빈@2018</span>
         </div>
     </div>
 
     <!-- Dog body -->
-    <div id="body">
+    <div id="main">
         <!-- <button onclick="addRandomListMaster()">add</button>
         <button onclick="deleteAll()">blyat</button> -->
-        <button onclick="listAllInit()">RELOAD</button>
+        <div id="buttons">
+            <button onclick="listAllInit()" class="func-button">
+                <!-- <i class="fas fa-sync fa-6x"></i> -->
+                <p class="fa-icon fa-sync"></p>
+                <span>다시 불러오기</span>
+            </button>
+    
+            <button class="func-button" onclick="showModal('정보', '제작 : 안유빈<br>DOG API를 사용하여 만들었습니다.<br>여기 있는 강아지 사진은 전부 제 소유가 아님을 밝힙니다.<br>크레딧 :<br>DOG API : https://dog.ceo/dog-api/<br>사용 : 서울남산체, 배달의 민족 도현체, Font-awesome 아이콘')">
+                <p class="fa-icon fa-info"></p>
+                <span>정보</span>
+            </button>
+        </div>
         <!-- <button onclick="showModal('재밌는거', '인생은 고통입니다.')">재밌는 사실</button> -->
 
 
@@ -41,24 +55,6 @@
 
         <!-- List -->
         <ul class="list">
-            <li class="list-entry">
-                <div id="thumbnail"></div>
-                <span id="desc">
-                    UNO
-                </span>
-            </li>
-            <li class="list-entry">
-                <div id="thumbnail"></div>
-                <span id="desc">
-                    DOS
-                </span>
-            </li>
-            <li class="list-entry">
-                <div id="thumbnail"></div>
-                <span id="desc">
-                    TRES
-                </span>
-            </li>
         </ul>
     </div>
 
@@ -85,8 +81,11 @@
 
             <!-- Dog pic -->
             <div id="wrapper">
+                <div id="load-spin">
+                    <img id="icon" src="sprites/sync.png"></img>
+                </div>
                 <span class="control" id="prev" onclick="prevPic()"><</span>
-                <img id="pic" src="TEST1.jpg"></img>
+                <img id="pic" src="sprites/TEST1.jpg"></img>
                 <span class="control" id="next" onclick="nextPic()">></span>
             </div>
             
@@ -95,5 +94,7 @@
 	    </div>
     </div>
 
+    <script src="main.js"></script>
+    <script type="text/javascript">pageReady();</script>
 </body>
 </html>

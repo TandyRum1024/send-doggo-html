@@ -1,8 +1,8 @@
 /*
     멍멍이 나만없어 : 강아지 사진 브라우저
     안유빈@2018
-*/
-/*
+
+    =====================================================================
     DOG API : 
     Every request looks something like this (JSON) :
     {
@@ -21,14 +21,14 @@
     =================================================================================
 */
 var dogBreedList = []; // List of breeds
-var loadingThumbnails = ["thumbLoad1.png", "thumbLoad2.png", "thumbLoad3.png"]; // Random list of loading placeholder images
+var loadingThumbnails = ["sprites/thumbLoad1.png", "sprites/thumbLoad2.png", "sprites/thumbLoad3.png"]; // Random list of loading placeholder images
 var lists = []; // List of entries
 var msgModal = document.querySelector("#msg.modal");
 var picModal = document.querySelector("#pic.modal");
 var isMsgOn = false;
 
 // picture modal
-var picqueue = ["TEST1.jpg"]; // picture list
+var picqueue = [""]; // picture list
 var picidx = 0; // current picture idx
 var picBreedId = "beagle"; // current viewing breed id
 
@@ -88,7 +88,7 @@ function dogFetch (url, callback, pass)
     request.onerror = function()
     {
         console.log("REQUEST ERROR : " + toString(this.statusText));
-        
+        callback(null);
     };
 
 
@@ -116,7 +116,7 @@ function fetchAllDogOld ()
             breedList[idx++] = key;
         }
 
-        var bodyNode = document.getElementById("body");
+        var bodyNode = document.getElementById("main");
         var breedListNode = bodyNode.querySelector(".breed-list > #list");
         var breedChildNodes = breedListNode.childNodes;
 
@@ -176,7 +176,7 @@ function listAllInit ()
 function listAllDone ()
 {
     // Update list
-    var bodyNode = document.getElementById("body");
+    var bodyNode = document.getElementById("main");
     var breedListNode = bodyNode.querySelector(".breed-list > #list");
     
     /*
@@ -223,13 +223,14 @@ function listAllDone ()
         {
             // Thumbnail; Fetch & Uses callbackfunction to set it!
             updateThumbnail(listElem.querySelector("#thumbnail"), thumburl);
+            // updateThumbnail(listElem.querySelector("#thumbnail"), "E.jpg");
         });
 
         // Set click event
         setListClickCallback(listElem, function ()
         {
             resetPic(breedStr[0]);
-            showPic();
+            showPic(breedStr[1]);
         });
         
         // Debug : Only do it once for testing
@@ -241,7 +242,7 @@ function listAllDone ()
 // Fetches all dogs breed and stores in breedList
 function fetchAllBreeds (callback)
 {
-    dogFetch("https://dog.ceo/api/breeds/list/all", function (allbreeds)
+    dogFetch("https://dog.ceo/api/breeds/list/all", function (allbreeds, error)
     {
         // Clear breeds dict & fill it w/ breeds
         if (allbreeds)
@@ -258,7 +259,7 @@ function fetchAllBreeds (callback)
         }
         else
         {
-            showModal("OH NO", "견종을 받아오는 중 에러가 났어요");
+            showModal("에러", "견종을 받아오는 중 에러가 났어요.<br>인터넷 접속을 확인해 주세요.");
         }
     });
 }
@@ -299,24 +300,27 @@ function addRandomListMaster ()
 function addList ()
 {
     // Default breed text
-    var dogFirst = new Array("시베리안 ", "웰시 ", "단단한 ", "댕댕이 ", "진돗", "개같은 ", "골든 ");
-    var dogLast = new Array("개", "허스키", "코기", "치와와", "포메나리안", "댕댕이", "리트리버", "홍길동", "철수");
+    var dogFirst = new Array("시베리안 ", "웰시 ", "단단한 ", "댕댕이 ", "진돗", "개같은 ", "골든 ", "이 페이지는 유빈이껍니다 만지지마 퉤퉷퉤");
+    var dogLast = new Array("개", "허스키", "코기", "치와와", "포메나리안", "댕댕이", "리트리버", "홍길동", "철수", "이 페이지는 유빈이껍니다 만지지마 퉤퉷퉤");
     
-    var list = document.querySelector("#body > .list");
+    var list = document.querySelector("#main > .list");
     
     // List base
     var listentry = document.createElement("li");
     listentry.className = "list-entry";
 
     // components of entry
-    var entryDesc = document.createElement("span");
+    var entryDesc = document.createElement("p");
     var entryImg = document.createElement("div");
+    var entryDescContainer = document.createElement("div");
 
     // Set desc to random gibberish
     var randomX = Math.floor(Math.random() * dogFirst.length);
     var randomY = Math.floor(Math.random() * dogLast.length);
     entryDesc.appendChild(document.createTextNode(dogFirst[randomX] + dogLast[randomY]));
     entryDesc.id = "desc";
+    entryDescContainer.id = "container";
+    entryDescContainer.appendChild(entryDesc);
 
     // Set thumbnial to random doggo :D
     entryImg.id = "thumbnail";
@@ -326,7 +330,7 @@ function addList ()
 
     // Add node
     listentry.appendChild(entryImg);
-    listentry.appendChild(entryDesc);
+    listentry.appendChild(entryDescContainer);
 
     list.appendChild(listentry);
 
@@ -366,7 +370,7 @@ function updateGalleryPic (idx)
         }
         else
         {
-            picElem.src = "picLoad.png";
+            picElem.src = "sprites/picTransparent.png";
             pic.onload = function ()
             {
                 picElem.src = this.src;
@@ -374,7 +378,9 @@ function updateGalleryPic (idx)
         }
     }
     else // Internal File
+    {
         picElem.src = pic;
+    }
 }
 
 /*
@@ -384,7 +390,9 @@ function updateGalleryPic (idx)
 function setGalleryPic (url)
 {
     var picElem = document.querySelector("#pic.modal > #content > #wrapper > #pic");
+    
     picElem.src = url;
+    picElem.style.display = "block";
 }
 
 function deleteAll ()
@@ -454,12 +462,15 @@ function hideModal ()
     Picture modal related shit
     ============================================
 */
-function showPic ()
+function showPic (title)
 {
     if (!picModal)
         picModal = document.querySelector("#pic.modal");
 
     picModal.style.display = "block";
+
+    if (title)
+        picModal.querySelector("#content > #title").textContent = title;
 }
 
 function hidePic ()
@@ -477,7 +488,8 @@ function hidePic ()
 function resetPic (breed)
 {
     // Show loading image
-    setGalleryPic("picLoad.png");
+    setGalleryPic("sprites/picTransparent.png");
+    // setGalleryPic(null);
 
     // clear pic queue
     picqueue = [];
@@ -497,15 +509,13 @@ function addPic (callback)
 {
     // Preload
     var img = new Image();
-    img.src = "picLoad.png";
+    img.src = "sprites/picTransparent.png";
     picqueue.push(img);
 
     dogFetch("https://dog.ceo/api/breed/" + picBreedId + "/images/random", function (url)
     {    
         img.src = url;
         updateGalleryPic(picidx); // Juuust in case of the unloaded image loading after we updated into it
-
-        // console.log("PUSH : " + picqueue[picqueue.length - 1]);
 
         if (callback)
             callback (url);
