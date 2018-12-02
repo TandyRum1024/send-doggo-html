@@ -229,7 +229,7 @@ button
 {
     
     font-family: bm_font;
-    font-size: 10em;
+    font-size: 10vw;
     font-style: italic;
     /*
     font-family: chinese;
@@ -240,7 +240,7 @@ button
 
     /* Center */
     position: absolute;
-    width: 75vw;
+    width: 80vw;
     left: 50%;
     top: 30%;
     transform: translate(-50%, -50%) rotatez(0deg);
@@ -353,7 +353,7 @@ button
 .breed-list > #title
 {
     font-family: bm_font;
-    font-size: 4em;
+    font-size: 50vh;
     line-height: 1.42em;
 
     text-shadow: 0.1em 0.1em rgb(32, 33, 34);
